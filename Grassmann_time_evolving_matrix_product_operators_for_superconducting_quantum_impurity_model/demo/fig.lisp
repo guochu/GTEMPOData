@@ -1,0 +1,151 @@
+(ql:quickload :eikonal)
+(in-package :eikonal)
+
+(defparameter *width* 350)
+(defparameter *height* 225)
+(setf *root-frame* (frame :width *width* :height *height*))
+
+(defparameter arrow (marker "arrow" 10 10))
+(let* ((w 8)
+       (h 6)
+       (h/2 (/ h 2)))
+  (setf (width arrow) w)
+  (setf (height arrow) h)56
+  (setf (ref-p arrow) (point w h/2))
+  (add (triangle 0 (point w h/2) (point 0 h)) :frame arrow :fill "black"))
+(add arrow)
+
+(defparameter y (- *height* 50))
+(defparameter dx 30)
+(defparameter r 6)
+
+(with-attributes (:translate -140)
+;; Fig (b)
+(defun node (p &rest args)
+  (apply #'add (circle p r) args)
+  (add (line (- p (point 0 r)) (- p (point 0 (* 2.6 r))))
+       :stroke "black" :stroke-width 0.8 :marker-end "arrow")) 
+
+(loop for i from 4 to 12 by 4
+      for j from 3 downto 1
+      do (progn (with-attributes (:stroke "green" :fill "green")
+                  (node (point (* (+ i 1) dx) y) :fill-opacity 0.3)
+                  (node (point (* (+ i 2) dx) y) :fill-opacity 0.7))           
+                (with-attributes (:stroke "blue" :fill "blue")
+                  (node (point (* (+ i 3) dx) y) :fill-opacity 0.3)
+                  (node (point (* (+ i 4) dx) y) :fill-opacity 0.7))
+                (with-attributes (:font-size 10)
+                  (add (text (point (* (+ i 1) dx) (+ y 3)) (format nil "~D" j)))
+                  (add (text (point (* (+ i 2) dx) (+ y 3)) (format nil "~D" j)))
+                  (add (text (point (* (+ i 3) dx) (+ y 3)) (format nil "~D" j)))
+                  (add (text (point (* (+ i 4) dx) (+ y 3)) (format nil "~D" j))))))
+
+(loop for i from 5 to 15
+      do (with-attributes (:stroke "black" :stroke-width 0.8)
+           (add (line (point (+ (* i dx) r) y) (point (- (* (+ i 1) dx) r) y)))))
+
+(let* ((y (- y 150)))
+  (with-attributes (:stroke "green" :fill "green")
+    (node (point (* 10.5 dx) y) :fill-opacity 0.3)
+    (node (point (* 12 dx) y) :fill-opacity 0.7))
+  (add (latex (point (* 10.8 dx) (- y 2)) "$a_{k\\uparrow}$"))
+  (add (latex (point (* 12.3 dx) (- y 2)) "$a_{k\\uparrow}$"))
+  (add (line (point (* 12.33 dx) (- y 3.6)) (point (* 12.55 dx) (- y 3.6))) :stroke "black" :stroke-width 0.8)
+  (with-attributes (:stroke "blue" :fill "blue")
+      (node (point (* 13.5 dx) y) :fill-opacity 0.3)
+      (node (point (* 15 dx) y) :fill-opacity 0.7))
+  (add (latex (point (* 13.8 dx) (- y 2)) "$a_{k\\downarrow}$"))
+  (add (latex (point (* 15.3 dx) (- y 2)) "$a_{k\\downarrow}$"))
+  (add (line (point (* 15.33 dx) (- y 3.6)) (point (* 15.53 dx) (- y 3.6))) :stroke "black" :stroke-width 0.8)
+    )
+
+
+(node (point (* 15 dx) (+ y 30)) :stroke "blue" :fill "blue" :fill-opacity 0.3)
+(with-attributes (:stroke "black" :stroke-width 0.8)
+  (add (line (point (* 15 dx) (- y -30 (* 2.8 r))) (point (* 15 dx) (+ y r)))))
+(node (point (* 11 dx) (+ y 30)) :stroke "blue" :fill "blue" :fill-opacity 0.3)
+(with-attributes (:stroke "black" :stroke-width 0.8)
+  (add (line (point (* 11 dx) (- y -30 (* 2.8 r))) (point (* 11 dx) (+ y r))))
+  (add (line (point (+ (* 11 dx) r) (+ y 30)) (point (- (* 15 dx) r) (+ y 30))) :stroke "olive"))
+(add (latex (point (* 12.1 dx) (+ y 15)) "$\\langle a_{2\\downarrow}a_{1\\downarrow}\\rangle$"))
+
+(node (point (* 7 dx) (+ y 30)) :stroke "blue" :fill "blue" :fill-opacity 0.3)
+(with-attributes (:stroke "black" :stroke-width 0.8)
+  (add (line (point (* 7 dx) (- y -30 (* 2.8 r))) (point (* 7 dx) (- y (- r))))))
+(node (point (* 5 dx) (+ y 30)) :stroke "green" :fill "green" :fill-opacity 0.3)
+(with-attributes (:stroke "black" :stroke-width 0.8)
+  (add (line (point (* 5 dx) (- y -30 (* 2.8 r))) (point (* 5 dx) (- y (- r)))))
+  (add (line (point (+ (* 5 dx) r) (+ y 30)) (point (- (* 7 dx) r) (+ y 30))) :stroke "olive"))
+(add (latex (point (* 5.2 dx) (+ y 15)) "$\\langle a_{3\\uparrow}a_{2\\downarrow}\\rangle$"))
+
+(node (point (* 14 dx) (- y 30)) :stroke "green" :fill "green" :fill-opacity 0.7)
+(with-attributes (:stroke "black" :stroke-width 0.8)
+  (add (line (point (* 14 dx) (- y (* 2.8 r))) (point (* 14 dx) (- y 30 (* -1 r))))))
+(node (point (* 11 dx) (- y 30)) :stroke "blue" :fill "blue" :fill-opacity 0.3)
+(with-attributes (:stroke "black" :stroke-width 0.8)
+  (add (line (point (* 11 dx) (- y (* 2.8 r))) (point (* 11 dx) (- y 30 (* -1 r)))))
+  (add (line (point (+ (* 11 dx) r) (- y 30)) (point (- (* 14 dx) r) (- y 30))) :stroke "purple"))
+(add (latex (point (* 11.7 dx) (- y 45)) "$\\langle a_{2\\downarrow}a_{1\\uparrow}\\rangle$"))
+(add (line (point (* 12.52 dx) (- y 42.2)) (point (* 12.7 dx) (- y 42.2)))
+     :stroke "black" :stroke-width 0.8)
+
+(node (point (* 10 dx) (- y 30)) :stroke "green" :fill "green" :fill-opacity 0.7)
+(with-attributes (:stroke "black" :stroke-width 0.8)
+  (add (line (point (* 10 dx) (- y (* 2.8 r))) (point (* 10 dx) (- y 30 (* -1 r))))))
+(node (point (* 5 dx) (- y 30)) :stroke "green" :fill "green" :fill-opacity 0.3)
+(with-attributes (:stroke "black" :stroke-width 0.8)
+  (add (line (point (* 5 dx) (- y (* 2.8 r))) (point (* 5 dx) (- y 30 (* -1 r)))))
+  (add (line (point (+ (* 5 dx) r) (- y 30)) (point (- (* 10 dx) r) (- y 30))) :stroke "purple"))
+(add (latex (point (* 6.7 dx) (- y 45)) "$\\langle a_{3\\uparrow}a_{2\\uparrow}\\rangle$"))
+(add (line (point (* 7.52 dx) (- y 42.2)) (point (* 7.7 dx) (- y 42.2)))
+     :stroke "black" :stroke-width 0.8)
+
+
+;; Fig (a)
+(defparameter y (- *height* 150))
+(loop for i from 4 to 12 by 4
+      for j from 3 downto 1
+      do (progn (with-attributes (:stroke "green" :fill "green")
+                  (node (point (* (+ i 1) dx) y) :fill-opacity 0.3)
+                  (node (point (* (+ i 2) dx) y) :fill-opacity 0.7))           
+                (with-attributes (:stroke "blue" :fill "blue")
+                  (node (point (* (+ i 3) dx) y) :fill-opacity 0.3)
+                  (node (point (* (+ i 4) dx) y) :fill-opacity 0.7))
+                (with-attributes (:font-size 10)
+                  (add (text (point (* (+ i 1) dx) (+ y 3)) (format nil "~D" j)))
+                  (add (text (point (* (+ i 2) dx) (+ y 3)) (format nil "~D" j)))
+                  (add (text (point (* (+ i 3) dx) (+ y 3)) (format nil "~D" j)))
+                  (add (text (point (* (+ i 4) dx) (+ y 3)) (format nil "~D" j))))))
+
+(loop for i from 5 to 15
+      do (with-attributes (:stroke "black" :stroke-width 0.8)
+           (add (line (point (+ (* i dx) r) y) (point (- (* (+ i 1) dx) r) y)))))
+
+(with-attributes (:stroke "purple" :stroke-width 0.6)
+  (add (line (point (* 5 dx) (- y 25)) (point (* 16 dx) (- y 25))))
+  (add (line (point (* 5 dx) (- y 17)) (point (* 5 dx) (- y 25))))
+  (add (line (point (* 9 dx) (- y 17)) (point (* 9 dx) (- y 25))))
+  (add (line (point (* 13 dx) (- y 17)) (point (* 13 dx) (- y 25))))
+  (add (line (point (* 16 dx) (- y 17)) (point (* 16 dx) (- y 25))))
+  (add (line (point (* 12 dx) (- y 17)) (point (* 12 dx) (- y 25))))
+  (add (line (point (* 8 dx) (- y 17)) (point (* 8 dx) (- y 25))))
+  (add (line (point (* 14 dx) (- y 17)) (point (* 14 dx) (- y 25))) :stroke-width 3))
+  
+
+(with-attributes (:stroke "olive" :stroke-width 0.6)
+  (add (line (point (* 5 dx) (+ y 20)) (point (* 16 dx) (+ y 20))))
+  (add (line (point (* 5 dx) (+ y 8)) (point (* 5 dx) (+ y 20))))
+  (add (line (point (* 9 dx) (+ y 8)) (point (* 9 dx) (+ y 20))))
+  (add (line (point (* 13 dx) (+ y 8)) (point (* 13 dx) (+ y 20))))
+  (add (line (point (* 16 dx) (+ y 8)) (point (* 16 dx) (+ y 20))))
+  (add (line (point (* 12 dx) (+ y 8)) (point (* 12 dx) (+ y 20))))
+  (add (line (point (* 8 dx) (+ y 8)) (point (* 8 dx) (+ y 20))))
+  (add (line (point (* 15 dx) (+ y 8)) (point (* 15 dx) (+ y 20))) :stroke-width 3))
+
+  )
+
+(add (text (point (* 0.4 dx) (- *height* 200)) "(a)") :font-size 14)
+(add (text (point (* 0.4 dx) (- *height* 100)) "(b)") :font-size 14)
+
+(savesvg "fig.svg")
+
