@@ -17,8 +17,6 @@
 \usepackage{calc}
 \usepackage{graphicx}
 \usepackage{color}
-\usepackage{ucs}
-\usepackage[utf8x]{inputenc}
 \makeatletter
 % Select an appropriate default driver (from TeXLive graphics.cfg)
 \begingroup
@@ -259,18 +257,17 @@
       \put(3315,3095){\makebox(0,0)[r]{\strut{}\tiny{-2}}}%
       \put(3315,3332){\makebox(0,0)[r]{\strut{}\tiny{0}}}%
       \put(3315,3570){\makebox(0,0)[r]{\strut{}\tiny{2}}}%
-      \put(3363,2912){\makebox(0,0){\strut{}\tiny{0}}}%
-      \put(3538,2912){\makebox(0,0){\strut{}\tiny{2}}}%
-      \put(3713,2912){\makebox(0,0){\strut{}\tiny{4}}}%
-      \put(3889,2912){\makebox(0,0){\strut{}\tiny{6}}}%
-      \put(4064,2912){\makebox(0,0){\strut{}\tiny{8}}}%
-      \put(4239,2912){\makebox(0,0){\strut{}\tiny{10}}}%
+      \put(3363,2816){\makebox(0,0){\strut{}}}%
+      \put(3538,2816){\makebox(0,0){\strut{}}}%
+      \put(3713,2816){\makebox(0,0){\strut{}}}%
+      \put(3889,2816){\makebox(0,0){\strut{}}}%
+      \put(4064,2816){\makebox(0,0){\strut{}}}%
+      \put(4239,2816){\makebox(0,0){\strut{}}}%
       \put(3363,3629){\makebox(0,0)[l]{\strut{}\scaleto{\times10^{-2}}{4pt}}}%
     }%
     \gplgaddtomacro\gplfronttext{%
       \csname LTb\endcsname%%
       \put(3134,3273){\rotatebox{-270.00}{\makebox(0,0){\strut{}\scaleto{\mathrm{error}}{2.5pt}}}}%
-      \put(3801,2800){\makebox(0,0){\strut{}\scaleto{t}{4pt}}}%
     }%
     \gplgaddtomacro\gplbacktext{%
       \csname LTb\endcsname%%
@@ -308,6 +305,22 @@
       \csname LTb\endcsname%%
       \put(3134,1408){\rotatebox{-270.00}{\makebox(0,0){\strut{}\scaleto{\mathrm{error}}{2.5pt}}}}%
       \put(3801,935){\makebox(0,0){\strut{}\scaleto{t}{4pt}}}%
+    }%
+    \gplgaddtomacro\gplbacktext{%
+      \csname LTb\endcsname%%
+      \put(3315,2473){\makebox(0,0)[r]{\strut{}\tiny{-1}}}%
+      \put(3315,2845){\makebox(0,0)[r]{\strut{}\tiny{0}}}%
+      \put(3363,2316){\makebox(0,0){\strut{}\tiny{0}}}%
+      \put(3538,2316){\makebox(0,0){\strut{}\tiny{2}}}%
+      \put(3713,2316){\makebox(0,0){\strut{}\tiny{4}}}%
+      \put(3889,2316){\makebox(0,0){\strut{}\tiny{6}}}%
+      \put(4064,2316){\makebox(0,0){\strut{}\tiny{8}}}%
+      \put(4239,2316){\makebox(0,0){\strut{}\tiny{10}}}%
+    }%
+    \gplgaddtomacro\gplfronttext{%
+      \csname LTb\endcsname%%
+      \put(3134,2677){\rotatebox{-270.00}{\makebox(0,0){\strut{}\scaleto{P_{\uparrow}-P_{\downarrow}}{4pt}}}}%
+      \put(3801,2204){\makebox(0,0){\strut{}\scaleto{t}{4pt}}}%
     }%
     \gplbacktext
     \put(0,0){\includegraphics[width={243.70bp},height={198.40bp}]{fig-inc}}%

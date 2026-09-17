@@ -111,7 +111,7 @@ set xrange [0.03:0.42]
 set xtics 0.1,0.1,0.4
 set format x '\small{%.2f}'
 set label '(c)' at graph -0.27,0.95
-set ylabel '$\mathcal{E}$' offset 2.5,0
+set ylabel '$\mathcal{E}$' offset 3.5,0
 set xlabel '$\delta t$'
 set label '$\scriptstyle\times10^{-2}$' at graph 0,1.04
 plot "uu_dt.dat" u 1:($2*1e2) w lp ls 10 dt 2 pt 4 ps 1.5 notitle,\
@@ -123,5 +123,6 @@ set origin 0.6,0.07
 unset label
 set label '(d)' at graph -0.27,0.95
 set yrange [1:8]
+set ylabel '$\mathcal{E}$' offset 2.5,0
 set label '$\scriptstyle\times10^{-2}$' at graph 0,1.04
 plot "ud_dt.dat" u 1:($2*1e2) w lp ls 10 dt 2 pt 4 ps 1.5 notitle,\

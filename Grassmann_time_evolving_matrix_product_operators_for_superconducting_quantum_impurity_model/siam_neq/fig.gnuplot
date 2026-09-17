@@ -195,7 +195,7 @@ set yrange [-3:2]
 #set format x '\tiny{%.1f}'
 set label '\scaleto{\times10^{-2}}{4pt}' at graph 0,1.1
 set ylabel '\scaleto{\mathrm{error}}{2.5pt}' offset 3.2,0
-set xlabel '\scaleto{t}{4pt}' offset 0,1.4
+set xtics ("" 0, "" 2, "" 4, "" 6, "" 8, "" 10) offset 0,0
 plot "nup_diff_chi400.dat" u 1:($2*1e2) w l ls 5 lw 1 notitle,\
 
 # (c)
@@ -207,6 +207,7 @@ set size 0.18,0.15
 set origin 0.19,0.28
 set mxtics 1
 set mytics 1
+set xtics 0,2,10 offset 0,0.6
 set yrange [-2:2]
 #set ylabel '\scaleto{\mathcal{E}}{4pt}' offset 2.8,0
 #set xlabel '\scaleto{\delta\tau}{4pt}' offset 0,1.4
@@ -235,4 +236,23 @@ set ytics -10,2,8
 set label '\scaleto{\times10^{-2}}{4pt}' at graph 0,1.1
 set ylabel '\scaleto{\mathrm{error}}{2.5pt}' offset 3.2,0
 set xlabel '\scaleto{t}{4pt}' offset 0,1.4
-plot "nn_diff_chi400.dat" u 1:($2*1e2) w l ls 5 lw 1 notitle,\
+plot "nn_diff_chi400.dat" u 1:($2*1e2) w l ls 5 lw 1 notitle
+
+# (b) magnetization inset: P_up - P_down, delta t = 0.05, chi = 400
+unset label
+unset arrow
+unset xlabel
+unset ylabel
+set size 0.18,0.15
+set origin 0.69,0.60
+set mxtics 1
+set mytics 1
+set yrange [-1.25:0.35]
+set ytics -1,1,0
+set xrange [0:10]
+set xtics 0,2,10 offset 0,0.6
+set ylabel '\scaleto{P_{\uparrow}-P_{\downarrow}}{4pt}' offset 3.2,0
+set xlabel '\scaleto{t}{4pt}' offset 0,1.4
+set format y '\tiny{%.0f}'
+set format x '\tiny{%.0f}'
+plot '< paste nup_Nt200_chi400.dat ndown_Nt200_chi400.dat' u 1:(($2-$4)*1e2) w l ls 5 lw 1 notitle
